@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works | Ghar Doctor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --primary: #1E7F5C;
+      --secondary: #2CA58D;
+      --accent: #1F6AE1;
+      --bg: #F5F9F8;
+      --white: #fff;
+      --dark: #1F2933;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Segoe UI, system-ui, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f6fffc, #eefaf6);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    nav {
+      background: white;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .nav-links a {
+      margin-left: 1.5rem;
+      color: #333;
+      font-weight: 500;
+      transition: .3s;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    header {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      animation: fadeUp .8s ease;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: .8rem;
+    }
+
+    header p {
+      max-width: 750px;
+      margin: auto;
+      color: #555;
+      font-size: 1.1rem;
+    }
+
+    .timeline {
+      max-width: 1100px;
+      margin: 4rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding: 0 2rem;
+    }
+
+    .step {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: .35s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      opacity: 0;
+      transition: .35s;
+      z-index: 0;
+    }
+
+    .step:hover::before {
+      opacity: 1;
+    }
+
+    .step * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .step:hover {
+      transform: translateY(-12px) scale(1.02);
+    }
+
+    .icon-box {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.2rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #e9fff7, #d6f7ec);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--primary);
+      transition: .4s;
+    }
+
+    .step:hover .icon-box {
+      background: linear-gradient(135deg, var(--accent), #3b82f6);
+      color: white;
+      transform: rotate(360deg) scale(1.1);
+    }
+
+    .step h3 {
+      margin-bottom: .6rem;
+      color: var(--primary);
+    }
+
+    .step p {
+      color: #555;
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+
+    .flow {
+      text-align: center;
+      margin-top: 5rem;
+      padding: 4rem 2rem;
+      background: white;
+      border-radius: var(--radius);
+      max-width: 1150px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: var(--shadow);
+    }
+
+    .flow h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 2.5rem;
+    }
+
+    .flow-card {
+      padding: 2rem 1.5rem;
+      background: linear-gradient(135deg, #f6fffc, #e9faf3);
+      border-radius: var(--radius);
+      transition: .3s;
+    }
+
+    .flow-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow);
+    }
+
+    footer {
+      margin-top: 4rem;
+      background: linear-gradient(135deg, #0f172a, #020617);
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    footer h3 {
+      color: var(--secondary);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <div id="loader">
+    <div class="spinner"></div>
+  </div> -->
+
+  <nav>
+    <div class="logo" onclick="location.href='index.html'">
+      Ghar Doctor
+    </div>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="user-guide.html">User Guide</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>How Ghar Doctor Works</h1>
+    <p>From wearable sensor to real-time dashboard — here’s how your health data travels securely and instantly.</p>
+  </header>
+
+  <section class="timeline">
+
+    <div class="step">
+      <div class="icon-box"><i class="fa-solid fa-heart-pulse"></i></div>
+      <h3>Vitals Detection</h3>
+      <p>Body sensors continuously monitor heart rate & temperature with medical-grade precision.</p>
+    </div>
+
+    <div class="step">
+      <div class="icon-box"><i class="fa-solid fa-microchip"></i></div>
+      <h3>ESP32 Processing</h3>
+      <p>ESP32 microcontroller processes raw sensor data and prepares it for secure transmission.</p>
+    </div>
+
+    <div class="step">
+      <div class="icon-box"><i class="fa-solid fa-wifi"></i></div>
+      <h3>WiFi Transmission</h3>
+      <p>Data is transmitted in real-time via encrypted WiFi channels to cloud infrastructure.</p>
+    </div>
+
+    <div class="step">
+      <div class="icon-box"><i class="fa-solid fa-cloud"></i></div>
+      <h3>Cloud Storage</h3>
+      <p>Encrypted medical data is stored securely for instant access and future analysis.</p>
+    </div>
+
+    <div class="step">
+      <div class="icon-box"><i class="fa-solid fa-chart-line"></i></div>
+      <h3>Live Dashboard</h3>
+      <p>Doctors & patients can track vitals live using a responsive web dashboard.</p>
+    </div>
+
+  </section>
+
+  <section class="flow">
+    <h2>Complete Data Flow</h2>
+
+    <div class="flow-grid">
+      <div class="flow-card">Wearable Sensors</div>
+      <div class="flow-card">ESP32 Controller</div>
+      <div class="flow-card">WiFi Communication</div>
+      <div class="flow-card">Secure Cloud Server</div>
+      <div class="flow-card">Live Web Dashboard</div>
+    </div>
+  </section>
+
+  <footer>
+    <h3>Ghar Doctor</h3>
+    <p>Smart Healthcare Monitoring System</p>
+    <p style="opacity:.6;margin-top:.5rem;">© 2026 Project Dashboard</p>
+  </footer>
+  <script src="js/script.js"></script>
+
+</body>
+
+
+</html>

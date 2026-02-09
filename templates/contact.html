@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Ghar Doctor</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --primary: #1f6ae1;
+            --secondary: #8e54e9;
+            --gradient: linear-gradient(135deg, #1f6ae1, #8e54e9);
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --text: #222;
+            --muted: #666;
+            --radius: 14px;
+            --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            --glow: 0 18px 50px rgba(31, 106, 225, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: white;
+            padding: 1rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            position: relative;
+            padding: 6px 0;
+            transition: 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 10px;
+            transition: 0.35s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            background: var(--gradient);
+            color: white !important;
+            padding: 0.6rem 1.3rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: 0.35s;
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--glow);
+        }
+
+        /* CONTACT */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 4rem 2rem;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .title h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .title p {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2.5rem;
+        }
+
+        .contact-info {
+            display: grid;
+            gap: 1.8rem;
+        }
+
+        .info-card {
+            background: var(--card);
+            padding: 1.8rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            transition: 0.4s ease;
+            cursor: pointer;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: var(--glow);
+        }
+
+        .info-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            transition: 0.5s;
+        }
+
+        .info-card:hover .info-icon {
+            transform: rotate(360deg) scale(1.15);
+        }
+
+        .info-text h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .info-text p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* FORM */
+        .contact-form {
+            background: var(--card);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 14px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+            background: transparent;
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 0 6px;
+            color: #777;
+            font-size: 0.9rem;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .form-group input:focus+label,
+        .form-group textarea:focus+label,
+        .form-group input:not(:placeholder-shown)+label,
+        .form-group textarea:not(:placeholder-shown)+label {
+            top: -8px;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+
+        .contact-form button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.35s;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: var(--glow);
+        }
+
+        footer {
+            background: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        @media(max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="loader">
+        <div class="spinner"></div>
+    </div> -->
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">Ghar Doctor</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="features.html">Features</a>
+            <a href="user-guide.html">User Guide</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="dashboard.html" class="btn">Dashboard</a>
+        </div>
+    </nav>
+
+    <!-- CONTACT -->
+    <section class="container">
+        <div class="title">
+            <h1>Contact Us</h1>
+            <p>We’d love to hear from you</p>
+        </div>
+
+        <div class="contact-grid">
+
+            <div class="contact-info">
+
+                <div class="info-card">
+                    <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div class="info-text">
+                        <h4>Phone</h4>
+                        <p>+91 98765 43210</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div class="info-text">
+                        <h4>Email</h4>
+                        <p>support@ghardoctor.in</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="info-text">
+                        <h4>Location</h4>
+                        <p>Madhya Pradesh, India</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" required placeholder=" ">
+                    <label>Full Name</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" required placeholder=" ">
+                    <label>Email Address</label>
+                </div>
+
+                <div class="form-group">
+                    <textarea rows="4" required placeholder=" "></textarea>
+                    <label>Message</label>
+                </div>
+
+                <button type="submit">Send Message</button>
+            </form>
+
+        </div>
+    </section>
+
+    <footer>
+        © 2026 Ghar Doctor • All Rights Reserved
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+
+
+</html>
