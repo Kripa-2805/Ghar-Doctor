@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghar Doctor - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        :root {
+            --primary: #1E7F5C;
+            --secondary: #2CA58D;
+            --accent: #1F6AE1;
+            --bg: #F5F9F8;
+            --text-dark: #1F2933;
+            --text-light: #6B7280;
+            --white: #ffffff;
+            --danger: #e74c3c;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, #3b82f6 100%);
+            --gradient-soft: linear-gradient(135deg, #f5f9f8 0%, #e8f5f1 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--gradient-soft);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-top: 4px solid transparent;
+            background-image: linear-gradient(white, white), var(--gradient-primary);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-secondary:hover {
+            background: var(--gradient-primary);
+            color: var(--white);
+            border-color: transparent;
+        }
+
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 2rem;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .logo {
+            color: white;
+            margin-bottom: 2rem;
+            font-weight: bold;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .sidebar a {
+            display: block;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: var(--white);
+            font-weight: 600;
+            padding-left: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dash-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .stat-unit {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .status-normal {
+            background-color: #DEF7EC;
+            color: #03543F;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .stat-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius);
+            background: var(--gradient-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            transition: all 0.4s ease;
+        }
+
+        .alert-list {
+            padding: 0;
+            list-style: none;
+            margin-top: 1rem;
+            color: var(--text-light);
+        }
+
+        .alert-item {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .quick-action-card {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .quick-action-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-soft);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="logo" onclick="location.href='{{ url_for('index') }}'">
+                <i class="fa-solid fa-user-doctor"></i> Ghar Doctor
+            </div>
+            <nav style="display: block; background: transparent; padding: 0; box-shadow: none;">
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('dashboard') }}" class="active">Live Dashboard</a>
+                <a href="{{ url_for('medical_history') }}">Medical History</a> 
+                <a href="{{ url_for('settings') }}">Settings</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </nav>
+        </aside>
+        
+        <main class="dash-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="margin-bottom: 0.5rem;">
+                        Patient Monitor: {% if user %}{{ user.full_name }}{% else %}Guest{% endif %}
+                    </h2>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">
+                        <i class="fa-solid fa-calendar"></i> Last Updated: <span id="last-updated">Just now</span>
+                    </p>
+                </div>
+                <div>
+                    <span style="color: var(--text-light); margin-right: 0.5rem;">Connection Status: </span>
+                    <span class="status-badge status-normal">
+                        <i class="fa-solid fa-wifi pulse-animation"></i> Live Data Incoming
+                    </span>
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <h3 style="margin: 0;">Body Temperature</h3>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-solid fa-temperature-high"></i>
+                        </div>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <span class="stat-value" id="temp">
+                            {% if health_summary and health_summary.latest_reading %}
+                                {{ health_summary.latest_reading.body_temperature|round(1) }}
+                            {% else %}
+                                --
+                            {% endif %}
+                        </span>
+                        <span class="stat-unit">°F</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="status-badge status-normal">Normal</span>
+                        <span style="font-size: 0.85rem; color: var(--text-light);">
+                            <i class="fa-solid fa-circle-info"></i> Monitoring
+                        </span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <h3 style="margin: 0;">Heart Rate</h3>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <span class="stat-value" id="heart">
+                            {% if health_summary and health_summary.latest_reading %}
+                                {{ health_summary.latest_reading.heart_rate }}
+                            {% else %}
+                                --
+                            {% endif %}
+                        </span>
+                        <span class="stat-unit">BPM</span>
+                        <i class="fa-solid fa-heart" style="color: #e74c3c; margin-left: 10px; animation: pulse 1s infinite;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span class="status-badge status-normal">Resting</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                        <h3 style="margin: 0;">Recent Alerts</h3>
+                        <div class="stat-icon-wrapper">
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+                    </div>
+                    <ul class="alert-list">
+                        {% if health_summary and health_summary.active_alerts %}
+                            {% for alert in health_summary.active_alerts[:3] %}
+                            <li class="alert-item">
+                                <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b; margin-right: 8px;"></i>
+                                {{ alert.message[:50] }}...
+                            </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="alert-item">
+                                <i class="fa-solid fa-circle-check" style="color: #10b981; margin-right: 8px;"></i>
+                                System Active
+                            </li>
+                            <li class="alert-item">
+                                <i class="fa-solid fa-circle-check" style="color: #10b981; margin-right: 8px;"></i>
+                                All Vitals Normal
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid-3" style="margin-top: 2rem;">
+                <div class="card quick-action-card">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-history"></i>
+                    </div>
+                    <h4>View History</h4>
+                    <p style="color: var(--text-light); font-size: 0.9rem; margin: 0.5rem 0;">
+                        Access complete medical records
+                    </p>
+                    <a href="{{ url_for('medical_history') }}" class="btn btn-secondary" style="width: 100%; margin-top: 1rem; justify-content: center;">
+                        <i class="fa-solid fa-clock-rotate-left"></i> View Records
+                    </a>
+                </div>
+
+                <div class="card quick-action-card">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h4>Statistics</h4>
+                    <p style="color: var(--text-light); font-size: 0.9rem; margin: 0.5rem 0;">
+                        View health trends
+                    </p>
+                    <button onclick="alert('Statistics coming soon!')" class="btn btn-secondary" style="width: 100%; margin-top: 1rem; justify-content: center;">
+                        <i class="fa-solid fa-chart-bar"></i> View Stats
+                    </button>
+                </div>
+
+                <div class="card quick-action-card">
+                    <div class="quick-action-icon">
+                        <i class="fa-solid fa-cog"></i>
+                    </div>
+                    <h4>Settings</h4>
+                    <p style="color: var(--text-light); font-size: 0.9rem; margin: 0.5rem 0;">
+                        Manage your account
+                    </p>
+                    <a href="{{ url_for('settings') }}" class="btn btn-secondary" style="width: 100%; margin-top: 1rem; justify-content: center;">
+                        <i class="fa-solid fa-sliders"></i> Configure
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    
+    <script>
+        function updateDashboard() {
+            fetch('/api/v1/medical-data/latest')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.data) {
+                        document.getElementById('temp').textContent = 
+                            data.data.body_temperature ? data.data.body_temperature.toFixed(1) : '--';
+                        document.getElementById('heart').textContent = 
+                            data.data.heart_rate || '--';
+                        
+                        const now = new Date();
+                        document.getElementById('last-updated').textContent = 
+                            now.toLocaleTimeString();
+                    }
+                })
+                .catch(error => console.log('Update failed:', error));
+        }
+
+        setInterval(updateDashboard, 5000);
+        updateDashboard();
+    </script>
+
+<script>
+// Add this script before closing </body> tag
+function updateDashboard() {
+    fetch('/api/v1/medical-data/latest?user_id={{ user.id }}')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success && data.data) {
+                const reading = data.data;
+                
+                // Update temperature (always present)
+                document.getElementById('temp-value').textContent = 
+                    reading.body_temperature ? reading.body_temperature.toFixed(1) : '--';
+                
+                // Update heart rate
+                if (reading.heart_rate) {
+                    document.getElementById('hr-value').textContent = reading.heart_rate;
+                    document.getElementById('hr-status').textContent = 'Normal';
+                } else {
+                    document.getElementById('hr-value').textContent = '--';
+                    document.getElementById('hr-status').textContent = 'No finger detected';
+                }
+                
+                // Update SpO2
+                if (reading.spo2) {
+                    document.getElementById('spo2-value').textContent = reading.spo2 + '%';
+                } else {
+                    document.getElementById('spo2-value').textContent = 'Place finger';
+                }
+            }
+        })
+        .catch(err => console.error('Error fetching data:', err));
+}
+
+// Update every 5 seconds
+setInterval(updateDashboard, 5000);
+updateDashboard(); // Initial load
+</script>
+
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Ghar Doctor</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        :root {
+            --primary: #1f6ae1;
+            --secondary: #8e54e9;
+            --gradient: linear-gradient(135deg, #1f6ae1, #8e54e9);
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --text: #222;
+            --muted: #666;
+            --radius: 14px;
+            --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            --glow: 0 15px 45px rgba(31, 106, 225, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+
+
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: white;
+            padding: 1rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            position: relative;
+            padding: 6px 0;
+            transition: 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 10px;
+            transition: 0.35s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            background: var(--gradient);
+            color: white !important;
+            padding: 0.6rem 1.3rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: 0.35s;
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--glow);
+        }
+
+        /* ABOUT */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 4rem 2rem;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .title h1 {
+            font-size: 2.7rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .title p {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 2.2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(31, 106, 225, 0.08), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s ease;
+        }
+
+        .card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--glow);
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            transition: 0.6s;
+        }
+
+        .card:hover .icon {
+            transform: rotate(360deg) scale(1.15);
+        }
+
+        .card h3 {
+            margin-bottom: 0.7rem;
+        }
+
+        .card p {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            background: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="loader">
+  <div class="spinner"></div>
+</div> -->
+
+
+    <nav class="navbar">
+        <div class="logo">Ghar Doctor</div>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('features') }}">Features</a>
+            <div class="nav-links">
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('dashboard') }}" class="btn">Dashboard</a>
+        </div>
+    </nav>
+
+    <section class="container">
+        <div class="title">
+            <h1>About Ghar Doctor</h1>
+            <p>Next-gen IoT healthcare platform</p>
+        </div>
+
+        <div class="about-grid">
+
+            <div class="card">
+                <div class="icon"><i class="fa-solid fa-house-medical"></i></div>
+                <h3>Smart Healthcare</h3>
+                <p>Remote patient monitoring using IoT sensors for real-time medical tracking and faster diagnosis.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="fa-solid fa-microchip"></i></div>
+                <h3>ESP32 + IoT</h3>
+                <p>Advanced microcontrollers gather physiological data and sync securely with cloud dashboards.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>Cyber Secure</h3>
+                <p>End-to-end encrypted data pipelines ensure patient privacy and compliance with medical security
+                    standards.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>Live Analytics</h3>
+                <p>Doctors get instant alerts, charts, and predictions for proactive medical decisions.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        © 2026 Ghar Doctor • All Rights Reserved
+    </footer>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+
+</html>

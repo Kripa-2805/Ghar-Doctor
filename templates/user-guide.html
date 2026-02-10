@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghar Doctor - User Guide</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <i class="fa-solid fa-user-doctor"></i> Ghar Doctor
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('features') }}"> Features </a>
+            <a href="{{ url_for('user_guide') }}" class="active">User Guide</a>
+            <a href="{{ url_for('about') }}">About</a> 
+            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('dashboard') }}" class="btn-nav">View Dashboard</a>
+        </div>
+    </nav>
+
+    <header class="container text-center" style="padding: 4rem 2rem;">
+        <h1 style="color: var(--primary); margin-bottom: 1rem;">User Guide & Documentation</h1>
+        <p style="color: var(--text-light); max-width: 700px; margin: 0 auto;">
+            [cite_start]Follow these instructions to ensure accurate readings and safe usage of the Ghar Doctor sensor kit[cite: 130].
+        </p>
+    </header>
+
+    <section class="container mb-2">
+        <div class="grid-3">
+            
+            <div class="card">
+                <div style="color: var(--accent); font-size: 2rem; margin-bottom: 1rem;">
+                    <i class="fa-solid fa-hand-holding-medical"></i>
+                </div>
+                <h3>Sensor Placement</h3>
+                <ul style="margin-top: 1rem; padding-left: 1.2rem; color: var(--text-dark); line-height: 1.8;">
+                    <li>Ensure the device is powered on and the ESP32 light is blinking.</li>
+                    <li>Place the temperature sensor gently against the skin (forehead or wrist).</li>
+                    <li>Keep your finger steady on the pulse sensor for at least 15 seconds.</li>
+                    [cite_start]<li>Avoid movement during the data collection phase[cite: 132].</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div style="color: #e67e22; font-size: 2rem; margin-bottom: 1rem;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3>Common Errors</h3>
+                <ul style="margin-top: 1rem; padding-left: 1.2rem; color: var(--text-dark); line-height: 1.8;">
+                    <li><strong>No Data:</strong> Check Wi-Fi connection on the ESP32 module.</li>
+                    <li><strong>Inaccurate Temp:</strong> Ensure the sensor is not covered by sweat or hair.</li>
+                    [cite_start]<li><strong>Erratic Pulse:</strong> Do not press too hard on the sensor; a light touch is best[cite: 133].</li>
+                </ul>
+            </div>
+
+            <div class="card" style="border-top-color: #e74c3c;">
+                <div style="color: #e74c3c; font-size: 2rem; margin-bottom: 1rem;">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+                <h3>Safety Precautions</h3>
+                <ul style="margin-top: 1rem; padding-left: 1.2rem; color: var(--text-dark); line-height: 1.8;">
+                    <li>Do not use the device on open wounds or injured skin.</li>
+                    <li>Keep the electronic components away from water/moisture.</li>
+                    <li>Discontinue use if the device becomes uncomfortably hot.</li>
+                    [cite_start]<li>This device is for <strong>screening only</strong> and is not a replacement for a doctor[cite: 134, 154].</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Ghar Doctor Project. Medical Screening & Educational Purpose Only.</p>
+    </footer>
+
+</body>
+</html>
+

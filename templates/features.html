@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghar Doctor - Features</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        :root {
+            --primary: #1E7F5C;
+            --secondary: #2CA58D;
+            --accent: #1F6AE1;
+            --bg: #F5F9F8;
+            --text-dark: #1F2933;
+            --text-light: #6B7280;
+            --white: #ffffff;
+            --danger: #e74c3c;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, #3b82f6 100%);
+            --gradient-soft: linear-gradient(135deg, #f5f9f8 0%, #e8f5f1 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--gradient-soft);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        nav:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-img {
+            height: 120px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover .logo-img {
+            transform: translateY(-2px);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+            cursor: pointer;
+        }
+
+        .nav-links a.nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a.nav-item:hover::after,
+        .nav-links a.nav-item.active::after {
+            width: 100%;
+        }
+
+        .nav-links a.nav-item:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a.nav-item.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-links .btn-nav {
+            background: var(--gradient-accent);
+            color: var(--white);
+            padding: 0.5rem 1.2rem;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(31, 106, 225, 0.3);
+            cursor: pointer;
+        }
+
+        .nav-links .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(31, 106, 225, 0.4);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Feature Sections */
+        .feature-section {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            padding: 3rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-section:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-section:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .feature-section.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .feature-icon-box {
+            flex: 0 0 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon-wrapper {
+            width: 150px;
+            height: 150px;
+            background: var(--gradient-soft);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .feature-icon-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-section:hover .feature-icon-wrapper::before {
+            opacity: 1;
+        }
+
+        .feature-section:hover .feature-icon-wrapper {
+            background: var(--gradient-primary);
+            transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 12px 30px rgba(30, 127, 92, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            color: var(--secondary);
+            transition: all 0.4s ease;
+        }
+
+        .feature-section:hover .feature-icon {
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-content h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-section:hover .feature-content h2 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-content p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .feature-highlight {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: var(--white);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.8rem;
+            box-shadow: 0 2px 8px rgba(30, 127, 92, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-section:hover .feature-highlight {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 127, 92, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--text-dark) 0%, #0f1419 100%);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            color: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-icon:hover::before {
+            opacity: 1;
+        }
+
+        .social-icon i {
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 0 8px 20px rgba(31, 106, 225, 0.4);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .logo-img {
+                height: 100px;
+            }
+
+            .feature-section {
+                flex-direction: column !important;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .feature-icon-box {
+                flex: 0 0 auto;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="loader">
+        <div class="spinner"></div>
+    </div> -->
+
+    <nav>
+        <div class="logo" onclick="location.href='{{ url_for('index') }}'">
+            <img src="logo.png" alt="Ghar Doctor Logo" class="logo-img">
+            <span class="logo-text">Ghar Doctor</span>
+        </div>
+        <div class="nav-links">
+            <a class="nav-item" href="{{ url_for('index') }}">Home</a>
+            <a class="nav-item active" href="{{ url_for('features') }}">Features</a>
+            <a href="{{ url_for('user_guide') }}">User Guide</a>
+            <a class="nav-item" href="#">About</a>
+            <a class="nav-item" href="#">Contact</a>
+            <a class="btn-nav" href="{{ url_for('dashboard') }}">View Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1>Powerful Features for Better Healthcare</h1>
+            <p>Ghar Doctor combines cutting-edge technology with accessible healthcare solutions to bring medical
+                monitoring to every home.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Feature 1: Real-time Health Monitoring -->
+        <div class="feature-section">
+            <div class="feature-icon-box">
+                <div class="feature-icon-wrapper">
+                    <i class="fa-solid fa-heart-pulse feature-icon"></i>
+                </div>
+            </div>
+            <div class="feature-content">
+                <h2>Real-time Health Monitoring</h2>
+                <p>
+                    Experience continuous health tracking with instant updates on vital signs. Our system monitors body
+                    temperature, heart rate, and other critical parameters 24/7, providing you with real-time insights
+                    into your health status. Never miss a critical change with our live data streaming technology.
+                </p>
+                <span class="feature-highlight">Live Updates Every Second</span>
+            </div>
+        </div>
+
+        <!-- Feature 2: ESP32 Sensor Integration -->
+        <div class="feature-section reverse">
+            <div class="feature-icon-box">
+                <div class="feature-icon-wrapper">
+                    <i class="fa-solid fa-microchip feature-icon"></i>
+                </div>
+            </div>
+            <div class="feature-content">
+                <h2>ESP32 Sensor Integration</h2>
+                <p>
+                    Powered by advanced ESP32 microcontrollers, our wearable sensors deliver medical-grade accuracy. The
+                    seamless IoT integration ensures reliable data collection from multiple bio-sensors, transmitting
+                    vital information wirelessly to the cloud without any manual intervention.
+                </p>
+                <span class="feature-highlight">Medical-Grade Accuracy</span>
+            </div>
+        </div>
+
+        <!-- Feature 3: Secure Data Handling -->
+        <div class="feature-section">
+            <div class="feature-icon-box">
+                <div class="feature-icon-wrapper">
+                    <i class="fa-solid fa-shield-halved feature-icon"></i>
+                </div>
+            </div>
+            <div class="feature-content">
+                <h2>Secure Data Handling</h2>
+                <p>
+                    Your health data is protected with bank-level encryption. All patient information is transmitted
+                    through secure HTTPS channels and stored in encrypted databases. We comply with healthcare data
+                    privacy standards to ensure your medical records remain confidential and accessible only to
+                    authorized healthcare providers.
+                </p>
+                <span class="feature-highlight">End-to-End Encrypted</span>
+            </div>
+        </div>
+
+        <!-- Feature 4: Responsive Web Dashboard -->
+        <div class="feature-section reverse">
+            <div class="feature-icon-box">
+                <div class="feature-icon-wrapper">
+                    <i class="fa-solid fa-laptop-medical feature-icon"></i>
+                </div>
+            </div>
+            <div class="feature-content">
+                <h2>Responsive Web Dashboard</h2>
+                <p>
+                    Access your health data from any device - desktop, tablet, or smartphone. Our intuitive dashboard
+                    adapts seamlessly to any screen size, providing doctors and patients with a beautiful,
+                    easy-to-navigate interface. View trends, export reports, and share data with healthcare
+                    professionals effortlessly.
+                </p>
+                <span class="feature-highlight">Works on All Devices</span>
+            </div>
+        </div>
+
+        <!-- Feature 5: Scalable Architecture -->
+        <div class="feature-section">
+            <div class="feature-icon-box">
+                <div class="feature-icon-wrapper">
+                    <i class="fa-solid fa-network-wired feature-icon"></i>
+                </div>
+            </div>
+            <div class="feature-content">
+                <h2>Scalable Architecture</h2>
+                <p>
+                    Built to grow with your needs, our cloud-based infrastructure can support from a single patient to
+                    thousands of users simultaneously. The modular design allows easy integration of new sensors and
+                    features, making Ghar Doctor future-proof and adaptable to emerging healthcare technologies.
+                </p>
+                <span class="feature-highlight">Enterprise-Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container" style="padding: 0;">
+            <h3 style="color: var(--secondary); margin-bottom: 1rem;">Ghar Doctor</h3>
+            <p style="opacity: 0.8; margin-bottom: 0.5rem;">Bridging the gap between patients and doctors with IoT.</p>
+            <p style="font-size: 0.9rem; opacity: 0.6;">&copy; 2026 Ghar Doctor Project. Built for Hackathon.</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" class="social-icon"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+
+</html>
